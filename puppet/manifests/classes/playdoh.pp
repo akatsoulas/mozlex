@@ -12,7 +12,7 @@ class playdoh {
     exec { "create_mysql_database":
         command => "mysql -uroot -B -e'CREATE DATABASE $DB_NAME CHARACTER SET utf8;'",
         unless  => "mysql -uroot -B --skip-column-names -e 'show databases' | /bin/grep '$DB_NAME'",
-        require => File["$PROJ_DIR/project/settings/local.py"]
+        require => File["$PROJ_DIR/settings/local.py"]
     }
 
     exec { "grant_mysql_database":
