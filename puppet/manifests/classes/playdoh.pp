@@ -5,7 +5,7 @@
 class playdoh {
     file { "$PROJ_DIR/settings/local.py":
         ensure => file,
-        source => "$PROJ_DIR/project/settings/local.py-dist",
+        source => "$PROJ_DIR/settings/local.py-dist",
         replace => false;
     }
 
