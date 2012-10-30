@@ -17,6 +17,8 @@ INSTALLED_APPS = list(INSTALLED_APPS) + [
     '%s.base' % PROJECT_MODULE,
     # Example code. Can (and should) be removed for actual projects.
     '%s.examples' % PROJECT_MODULE,
+    '%s.lexicon' % PROJECT_MODULE,
+    'django.contrib.admin',
 ]
 
 LOCALE_PATHS = (

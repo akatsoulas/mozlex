@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
-class Language:
+class Language(models.Model):
     name = models.CharField(max_length=50,
             help_text='Maximum 50 Characters')
     language_code = models.CharField(max_length=3,
@@ -17,7 +17,7 @@ class Language:
         return self.name
 
 
-class Entry:
+class Entry(models.Model):
     LIVE_STATUS = 1
     DRAFT_STATUS = 2
     HIDDEN_STATUS = 3
@@ -36,6 +36,7 @@ class Entry:
     status = models.IntegerField(choices=STATUS_CHOICES, default=LIVE_STATUS)
 
     class Meta:
+        verbose_name_plural = 'Entries'
         ordering = ['lemma']
 
     def __unicode__(self):
@@ -44,13 +45,12 @@ class Entry:
     def save(self, force_insert=False, force_update=False):
         if not self.id:
             self.pud_date = datetime.datetime.now()
-        else:
-            self.updated_date = datetime.datetime.now()
+        self.updated_date = datetime.datetime.now()
         #TODO Add more logic if/when needed
         super(Entry, self).save(force_insert, force_update)
 
 
-class Translation:
+class Translation(models.Model):
     translation = models.TextField(blank=False)
     language = models.ForeignKey(Language)
     entry = models.ForeignKey(Entry)
