@@ -17,6 +17,13 @@ class Language(models.Model):
         return self.name
 
 
+#Overide Manager
+class LiveEntryManager(models.Manager):
+    def get_query_set(self):
+        return super(LiveEntryManager, self).get_query_set().filter(
+                status=self.model.LIVE_STATUS)
+
+
 class Entry(models.Model):
     LIVE_STATUS = 1
     DRAFT_STATUS = 2
@@ -27,6 +34,9 @@ class Entry(models.Model):
         (DRAFT_STATUS, 'Draft'),
         (HIDDEN_STATUS, 'Hidden'),
     )
+    #Managers
+    live_entries = LiveEntryManager()
+    objects = models.Manager()
     #Core Fields
     lemma = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=False)
@@ -46,7 +56,6 @@ class Entry(models.Model):
         if not self.id:
             self.pud_date = datetime.datetime.now()
         self.updated_date = datetime.datetime.now()
-        #TODO Add more logic if/when needed
         super(Entry, self).save(force_insert, force_update)
 
 
@@ -57,3 +66,6 @@ class Translation(models.Model):
 
     def __unicode__(self):
         return self.translation
+
+    def live_entry_set(self):
+        return self.entry_set.filter(status=Entry.LIVE_STATUS)
