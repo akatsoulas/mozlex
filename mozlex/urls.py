@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.conf.urls.defaults import patterns, include
+from django.conf.urls.defaults import patterns, include, url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from .examples import urls
@@ -28,6 +28,8 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
+    # Mozilla Lexicon Entry
+    url('', include('mozlex.lexicon.urls')),
 )
 
 ## In DEBUG mode, serve media files through Django.
