@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class Language(models.Model):
     name = models.CharField(max_length=50,
             help_text='Maximum 50 Characters')
-    language_code = models.CharField(max_length=3,
-            help_text='Maximum 3 Characters')
+    language_code = models.CharField(max_length=5,
+            help_text='Maximum 5 Characters')
     description = models.TextField(blank=True)
 
     class Meta:
@@ -51,6 +51,10 @@ class Entry(models.Model):
 
     def __unicode__(self):
         return self.lemma
+
+    @models.permalink
+    def get_absolute_url(self):
+        return('lexicon_edit_entry', (), {'lemma': self.lemma})
 
     def save(self, force_insert=False, force_update=False):
         if not self.id:

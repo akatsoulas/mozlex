@@ -1,0 +1,7 @@
+{% for dict_entry in entries_list %}
+    <h1>{{ dict_entry.keys()[0] }}</h1>
+    {% for entry in dict_entry.values()[0] %}
+        <h2>{{ entry.lemma }}</h2>
+        <p>{{ get_entry_translation(entry, locale) }}</p>
+    {% endfor %}
+{% endfor %}
