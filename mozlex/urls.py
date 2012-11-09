@@ -34,4 +34,9 @@ urlpatterns = patterns('',
 
 ## In DEBUG mode, serve media files through Django.
 if settings.DEBUG:
-    urlpatterns += staticfiles_urlpatterns()
+    #urlpatterns += staticfiles_urlpatterns()
+    media_url = settings.MEDIA_URL.lstrip('/').rstrip('/')
+    urlpatterns += patterns('',
+            url(r'^%s/(?P<path>.*)$' % media_url, 'django.views.static.serve',
+                {'document_root': settings.MEDIA_ROOT}),
+    )
