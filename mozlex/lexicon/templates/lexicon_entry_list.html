@@ -2,12 +2,26 @@
 
 {% block content %}
 <div class="row">
+    <div class="twelve columns">
+        <div class="panel">
+            <ul id="HorizontalList">
+                {% for letter in entries_list %}
+                <li>
+                    <a href="#{{ letter.keys()[0] }}">{{ letter.keys()[0] }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row">
     <div class="eight columns">
         <div class="row">
             {% for dict_entry in entries_list %}
             <div class="two columns">
                 <div class="panel">
-                    <h2>{{ dict_entry.keys()[0] }}</h2>
+                    <h2 id="{{ dict_entry.keys()[0] }}">{{ dict_entry.keys()[0] }}</h2>
                 </div>
             </div>
             <div class="ten columns">
@@ -22,7 +36,7 @@
         </div>
     </div>
       
-
+    <!-- TODO: Change this sidebar to sth meaningful -->
     <div class="four columns">
         <h4>Getting Started</h4>
         <p>We're stoked you want to try Foundation! To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>

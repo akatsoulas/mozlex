@@ -1211,3 +1211,4 @@ table.show-for-xlarge, table.show-for-large, table.hide-for-small, table.hide-fo
   .top-bar.expanded ul li.toggle-topbar a { content: ""; display: block; width: 0; height: 0; border: solid 8px; border-color: transparent transparent rgba(255, 255, 255, 0.5) transparent; top: auto; bottom: 50%; margin-bottom: -4px; }
   .top-bar ul li.has-button { padding: 0 22.5px 5px; }
   .top-bar ul li .button.small { margin: 0 !important; display: inline-block; width: 100%; } }
+
