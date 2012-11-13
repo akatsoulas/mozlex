@@ -7,7 +7,11 @@
             <ul id="HorizontalList">
                 {% for letter in entries_list %}
                 <li>
-                    <a href="#{{ letter.keys()[0] }}">{{ letter.keys()[0] }}</a>
+                    {% if letter.values()[0] is not none %}
+                        <a href="#{{ letter.keys()[0] }}">{{ letter.keys()[0] }}</a>
+                    {% else %}
+                        <span class="EmptyDictionaryValue">{{ letter.keys()[0] }}</span>
+                    {% endif %}
                 </li>
                 {% endfor %}
             </ul>
@@ -19,19 +23,21 @@
     <div class="eight columns">
         <div class="row">
             {% for dict_entry in entries_list %}
-            <div class="two columns">
-                <div class="panel">
-                    <h2 id="{{ dict_entry.keys()[0] }}">{{ dict_entry.keys()[0] }}</h2>
-                </div>
-            </div>
-            <div class="ten columns">
-                <div class="panel">
-                    {% for entry in dict_entry.values()[0] %}
-                    <h5>{{ entry.lemma }}</h5>
-                    <p>{{ get_entry_translation(entry, locale) }}</p>
-                    {% endfor %}
-                </div>
-            </div>
+                {% if dict_entry.values()[0] is not none %}
+                    <div class="two columns">
+                        <div class="panel">
+                            <h2 id="{{ dict_entry.keys()[0] }}">{{ dict_entry.keys()[0] }}</h2>
+                        </div>
+                    </div>
+                    <div class="ten columns">
+                        <div class="panel">
+                            {% for entry in dict_entry.values()[0] %}
+                                <h5>{{ entry.lemma }}</h5>
+                                <p>{{ get_entry_translation(entry, locale) }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

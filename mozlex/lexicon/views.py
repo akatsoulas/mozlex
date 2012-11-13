@@ -9,6 +9,8 @@ def view_entry_list(request):
         entries = Entry.live_entries.filter(lemma__istartswith=letter)
         if entries.count():
             ordered_entries.append({letter: entries})
+        else:
+            ordered_entries.append({letter: None})
     return render_to_response('lexicon_entry_list.html', {
         'entries_list': ordered_entries,
         'locale': request.locale,

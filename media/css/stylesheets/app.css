@@ -24,20 +24,23 @@
     list-style-type: none;
 }
 
+
 #HorizontalList li {
     display: inline;
 }
 
-#HorizontalList li a {
+#HorizontalList li a, .EmptyDictionaryValue {
     color: #000;
     padding: 0.2em 1em;
+}
+
+#HorizontalList li a {
     text-decoration: underline;
 }
 
 #HorizontalList li a:hover {
     color: green;
 }
-
 
 
 /* -----------------------------------------
