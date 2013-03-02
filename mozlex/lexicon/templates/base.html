@@ -1,103 +1,180 @@
 <!DOCTYPE html>
-<!-- TODO: Fix hardcoded /media. Replace with MEDIA_URL tag -->
 <!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<!--[if lt IE 7]>
+  <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en">
+<![endif]-->
+
+<!--[if IE 7]>
+  <html class="no-js lt-ie9 lt-ie8" lang="en">
+<![endif]-->
+
+<!--[if IE 8]>
+  <html class="no-js lt-ie9" lang="en">
+<![endif]-->
+
+<!--[if gt IE 8]>
+<!-->
+  <html lang="en">
+<!--<![endif]-->
+
 <head>
   <meta charset="utf-8" />
-
   <!-- Set the viewport width to device width for mobile -->
   <meta name="viewport" content="width=device-width" />
-
-  <title>Mozilla Lexicon{% block pagetitle %}{% endblock %}</title>
-  
-  <!-- Included CSS Files (Uncompressed) -->
-  <!--
-  <link rel="stylesheet" href="stylesheets/foundation.css">
-  -->
-  
-  <!-- Included CSS Files (Compressed) -->
-  <link rel="stylesheet" href="/media/css/stylesheets/foundation.min.css">
-  <link rel="stylesheet" href="/media/css/stylesheets/app.css">
+  <title>
+    {% block pagetitle %}Mozilla Lexicon{% endblock%}
+  </title>
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}img/mozlex/shortcut.ico" />
+  <!-- Included CSS Files -->
   <link href="//www.mozilla.org/tabzilla/media/css/tabzilla.css" rel="stylesheet">
-
-  <script src="/media/js/javascripts/modernizr.foundation.js"></script>
-
+  {{ css('common') }}
+  <!--[if lt IE 9]>
+      {{ css('common_ie') }}
+  <![endif]-->
   <!-- IE Fix for HTML5 Tags -->
   <!--[if lt IE 9]>
-    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+      {{ js('common_ie') }}
   <![endif]-->
-
+  {% block headextra %} {% endblock %}
+  <!-- our css is always last to override stuff -->
+  {% if get_development_environment() %}
+    <link href="/media/css/mozlex/app.less" rel="stylesheet/less">
+    {{ js('less') }}
+  {% else %}
+    {{ css('mozlex') }}
+  {% endif %}
 </head>
-<body class="{% block bodyclass %}{% endblock %}">
-    <div id="header">
-        <div class="row">
-            <div class="twelve columns" id="global-header-tab">
-                <a href="http://www.mozilla.org/" id="tabzilla">mozilla</a>
+
+<body>
+
+  <!-- Wrapper for background -->
+  <div id="wrapper">
+
+    <!-- container -->
+    <div class="container">
+
+      <!-- Header -->
+      <header class="row">
+        <div class="twelve columns">
+
+
+          <!-- Logo & Navigation -->
+          <div class="row">
+
+
+            <!-- Navigation -->
+            <div class="eight columns hide-on-phones" id="navigation-box">
             </div>
+
+            <!-- Mobile Navigation -->
+            <div class="eight columns show-on-phones" id="navigation-box-mobile">
+            </div>
+
+          </div>
         </div>
-    </div>
+      </header>
 
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
+      <!-- Separator -->
+      <div class="row">
+        <hr>
+      </div>
 
-    <div id="footer">
-    </div>
-  <!-- Included JS Files (Uncompressed) -->
-  <!--
-  
-  <script src="/media/js/javascripts/jquery.js"></script>
-  
-  <script src="javascripts/jquery.foundation.mediaQueryToggle.js"></script>
-  
-  <script src="javascripts/jquery.foundation.forms.js"></script>
-  
-  <script src="javascripts/jquery.foundation.reveal.js"></script>
-  
-  <script src="javascripts/jquery.foundation.orbit.js"></script>
-  
-  <script src="javascripts/jquery.foundation.navigation.js"></script>
-  
-  <script src="javascripts/jquery.foundation.buttons.js"></script>
-  
-  <script src="javascripts/jquery.foundation.tabs.js"></script>
-  
-  <script src="javascripts/jquery.foundation.tooltips.js"></script>
-  
-  <script src="javascripts/jquery.foundation.accordion.js"></script>
-  
-  <script src="javascripts/jquery.placeholder.js"></script>
-  
-  <script src="javascripts/jquery.foundation.alerts.js"></script>
-  
-  <script src="javascripts/jquery.foundation.topbar.js"></script>
-  
-  <script src="javascripts/jquery.foundation.joyride.js"></script>
-  
-  <script src="javascripts/jquery.foundation.clearing.js"></script>
-  
-  <script src="javascripts/jquery.foundation.magellan.js"></script>
-  
-  -->
-  
-  <!-- Included JS Files (Compressed) -->
-  <script src="/media/js/javascripts/jquery.js"></script>
-  <script src="/media/js/javascripts/foundation.min.js"></script>
+      <!-- Page Content -->
+      {% if messages %}
+        <div class="row">
+          {% for message in messages %}
+            <div class="alert-box {{ message.tags }}">
+              {{ message|safe }}
+              <a href="#" class="close">&times;</a>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% block content %}
+      {% endblock %}
+
+      <div class="end-row"></div>
+    </div> <!-- End of container -->
+  </div> <!-- End of background wrapper -->
+
+  <!-- Footer -->
+  {% block site_footer %}
+    {% include "includes/footer.html" %}
+  {% endblock %}
+
+  <!-- Join modal start -->
+  <div id="join-modal" class="reveal-modal">
+    <p class="lead">So, you wanna join us?</p>
+    <h2>Cool!</h2>
+    <p>
+      The Mozilla Reps program is open to all Mozillians who are 18 years
+      of age and above. Before you become a Mozilla Rep, you must
+      complete a short but rigorous application process in order to
+      demonstrate your interest in and motivation for joining the
+      program. Are you ready to take on the challenges and rewards
+      of advancing your leadership to the next level in Mozilla? If
+      your answer is YES, apply to become a Mozilla Rep today!
+    </p>
+    <p>
+      Not sure if you're ready for Mozilla Reps? There are many
+      other ways to take the lead in the Mozilla Community. If
+      you're a student, register for
+      the <a href="http://studentreps.mozilla.org">Student Reps
+      program</a> to gain experience leading projects at your
+      school. And all of our contributor opportunities are available
+      to you on the <a href="https://mozilla.org/contribute">Get
+      Involved homepage</a>.
+    </p>
+    <p>
+      The Mozilla Reps application process involves three simple
+      steps:
+    </p>
+    <ul>
+      <li>
+        <h4>Step 1</h4>
+        <p>Fill out and submit the
+        <a href="https://bugzilla.mozilla.org/form.reps.mentorship">
+          Mozilla Reps application form</a>.
+        A Mozilla Rep mentor will be in touch within 24 hours.</p>
+      </li>
+      <li>
+        <h4>Step 2</h4>
+        <p>If your application is approved, you'll be invited to be
+        interviewed by a member of the advisory council over IRC or
+        IM that same week. The interview lasts about 15 minutes and
+        you will be asked some simple questions about yourself, your
+        experience contributing to the Mozilla project and, of
+        course, your motivation for becoming a MozRep.</p>
+      </li>
+      <li>
+        <h4>Step 3</h4>
+        <p>
+          If you're accepted into the Mozilla Reps program, your
+          mentor will get you started and familiar with the tools at
+          your disposal to start organizing events, requesting
+          budgets, swag, etc. And just like that, you could become a
+          Mozilla Rep!
+        </p>
+      </li>
+    </ul>
+    <p>Thanks for your interest in making the Web better with Mozilla!</p>
+    <a class="close-reveal-modal">&#215;</a>
+  </div>
+  <!-- Join modal end -->
+
+  <!-- Included JS Files -->
+  <script src="https://browserid.org/include.js" type="text/javascript"></script>
   <script src="//www.mozilla.org/tabzilla/media/js/tabzilla.js"></script>
-  
-  <!-- Initialize JS Plugins -->
-  <script src="/media/js/javascripts/app.js"></script>
+  {% if get_development_environment() %}
+    {{ js('common-dbg') }}
+  {% else %}
+    {{ js('common') }}
+  {% endif %}
 
-  
-    <script>
-    $(window).load(function(){
-      $("#featured").orbit();
-    });
-    </script> 
-  
+  <div id="webtrends-url" data-url="{{ js('tracker-full')|f|escape }}"></div>
+  {{ js('tracker') }}
+  {% block bottomextra %} {% endblock %}
 </body>
+
 </html>
